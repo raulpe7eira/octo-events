@@ -9,8 +9,11 @@ version '1.0-SNAPSHOT'
 sourceCompatibility = 1.8
 
 repositories {
-    mavenCentral()
     jcenter()
+    mavenCentral()
+    maven {
+        url 'https://dl.bintray.com/kotlin/exposed'
+    }
 }
 
 dependencies {
@@ -23,6 +26,9 @@ dependencies {
 
     compile group: 'org.koin', name: 'koin-core', version: '1.0.0-RC-3'
     testCompile group: 'org.koin', name: 'koin-test', version: '1.0.0-RC-3'
+
+    compile group: 'org.jetbrains.exposed', name: 'exposed', version: '0.10.5'
+    compile group: 'org.postgresql', name: 'postgresql', version: '42.2.2'
 }
 
 compileKotlin {
