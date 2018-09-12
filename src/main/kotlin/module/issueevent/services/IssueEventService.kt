@@ -6,7 +6,6 @@ import module.issueevent.messages.Statistics
 import module.issueevent.repositories.IssueEventRepository
 
 interface IssueEventService {
-
     fun save(issueEvent: IssueEvent): Boolean
     fun getEvents(issueId: Int): List<Event>
     fun getStatistics(): Statistics

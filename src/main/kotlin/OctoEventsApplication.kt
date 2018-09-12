@@ -48,7 +48,9 @@ private fun getExtraProperties() = when (System.getenv("ENV")) {
 }
 
 fun main(args: Array<String>) {
-
-    startKoin(list = listOf(IssueEventModule), extraProperties = getExtraProperties())
+    startKoin(
+            list = listOf(IssueEventModule),
+            extraProperties = getExtraProperties()
+    )
     OctoEventsApplication().start()
 }

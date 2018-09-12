@@ -10,7 +10,6 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import org.joda.time.DateTime
 
 interface IssueEventRepository {
-
     fun save(issueEvent: IssueEvent): Boolean
     fun getEvents(issueId: Int): List<Event>
     fun getStatistics(): Statistics
@@ -44,7 +43,6 @@ class IssueEventRepositoryImpl : IssueEventRepository {
     }
 
     override fun getStatistics() = transaction {
-
         val actions = exec("""
             |SELECT ie.action
             |FROM issues_event ie
