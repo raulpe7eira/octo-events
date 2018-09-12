@@ -34,7 +34,7 @@ class Application : KoinComponent {
         }
 
         start()
-    }
+    }!!
 
     private fun loadExtraProperties() = when (System.getenv("ENV")) {
         "hmg", "prd" -> mapOf(
