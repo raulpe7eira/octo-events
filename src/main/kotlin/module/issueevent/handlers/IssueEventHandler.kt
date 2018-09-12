@@ -1,4 +1,4 @@
-package module.issueevent.controllers
+package module.issueevent.handlers
 
 import module.issueevent.messages.IssueEvent
 import io.javalin.Context
@@ -6,7 +6,7 @@ import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 import module.issueevent.services.IssueEventService
 
-object IssueEventController : KoinComponent {
+object IssueEventHandler : KoinComponent {
 
     private val issueEventService by inject<IssueEventService>()
 

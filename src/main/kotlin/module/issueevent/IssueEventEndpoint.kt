@@ -1,17 +1,17 @@
 package module.issueevent
 
-import module.issueevent.controllers.IssueEventController
+import module.issueevent.handlers.IssueEventHandler
 import io.javalin.apibuilder.ApiBuilder.*
 import io.javalin.apibuilder.EndpointGroup
 
 class IssueEventEndpoint : EndpointGroup {
 
     override fun addEndpoints() {
-        post("/payload", IssueEventController::payload)
+        post("/payload", IssueEventHandler::payload)
 
         path("/issues") {
-            get("/:id/events", IssueEventController::getEvents)
-            get("/statistics", IssueEventController::getStatistics)
+            get("/:id/events", IssueEventHandler::getEvents)
+            get("/statistics", IssueEventHandler::getStatistics)
         }
     }
 }

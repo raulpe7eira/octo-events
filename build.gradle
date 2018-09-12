@@ -23,6 +23,7 @@ dependencies {
     compile group: 'io.javalin', name: 'javalin', version: '2.1.1'
     compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.6'
+    testCompile group: 'khttp', name: 'khttp', version: '0.1.0'
 
     compile group: 'org.koin', name: 'koin-core', version: '1.0.0-RC-3'
     testCompile group: 'org.koin', name: 'koin-test', version: '1.0.0-RC-3'
@@ -43,4 +44,4 @@ flyway {
     configFiles = [file('src/main/resources/application.conf')]
 }
 
-mainClassName = 'Boot'
+mainClassName = 'BootRun'
