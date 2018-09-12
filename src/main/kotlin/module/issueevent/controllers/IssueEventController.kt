@@ -1,10 +1,10 @@
-package issueevent.controllers
+package module.issueevent.controllers
 
-import issueevent.entities.IssueEvent
+import module.issueevent.messages.IssueEvent
 import io.javalin.Context
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
-import issueevent.services.IssueEventService
+import module.issueevent.services.IssueEventService
 
 object IssueEventController : KoinComponent {
 

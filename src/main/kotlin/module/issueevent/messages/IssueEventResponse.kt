@@ -1,4 +1,4 @@
-package issueevent.entities
+package module.issueevent.messages
 
 import com.fasterxml.jackson.annotation.JsonProperty
 

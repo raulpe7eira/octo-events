@@ -29,6 +29,7 @@ dependencies {
 
     compile group: 'org.jetbrains.exposed', name: 'exposed', version: '0.10.5'
     compile group: 'org.postgresql', name: 'postgresql', version: '42.2.2'
+    testCompile group: 'com.h2database', name: 'h2', version: '1.4.197'
 }
 
 compileKotlin {

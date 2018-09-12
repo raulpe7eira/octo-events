@@ -1,9 +1,9 @@
-package issueevent.services
+package module.issueevent.services
 
-import issueevent.entities.Event
-import issueevent.entities.IssueEvent
-import issueevent.entities.Statistics
-import issueevent.repositories.IssueEventRepository
+import module.issueevent.messages.Event
+import module.issueevent.messages.IssueEvent
+import module.issueevent.messages.Statistics
+import module.issueevent.repositories.IssueEventRepository
 
 interface IssueEventService {
 

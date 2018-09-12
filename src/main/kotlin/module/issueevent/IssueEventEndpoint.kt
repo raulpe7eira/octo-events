@@ -1,6 +1,6 @@
-package issueevent
+package module.issueevent
 
-import issueevent.controllers.IssueEventController
+import module.issueevent.controllers.IssueEventController
 import io.javalin.apibuilder.ApiBuilder.*
 import io.javalin.apibuilder.EndpointGroup
 
