@@ -1,5 +1,6 @@
-CREATE TABLE issues (
-    id INT PRIMARY KEY,
-    created_at TIMESTAMP NOT NULL,
-    updated_at TIMESTAMP NOT NULL
+CREATE TABLE issues
+(
+    id int NOT NULL PRIMARY KEY,
+    created_at timestamp NOT NULL,
+    updated_at timestamp NOT NULL
 );

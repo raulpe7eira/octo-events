@@ -14,16 +14,16 @@ class Application : KoinComponent {
 
     fun start() {
         Database.connect(
-                url = getProperty("DATABASE_URL"),
-                driver = getProperty("DATABASE_DRIVER"),
-                user = getProperty("DATABASE_USERNAME"),
-                password = getProperty("DATABASE_PASSWORD")
+                url = getProperty("exposed.database.url"),
+                driver = getProperty("exposed.database.driver"),
+                user = getProperty("exposed.database.username"),
+                password = getProperty("exposed.database.password")
         )
 
         val app = Javalin.create().apply {
             error(404) { ctx -> ctx.json("not found") }
             exception(Exception::class.java) { e, _ -> e.printStackTrace() }
-            port(getProperty("APPLICATION_PORT"))
+            port(getProperty("javalin.application.port"))
         }.start()
 
         app.routes {
@@ -36,14 +36,14 @@ object Boot {
 
     private fun getExtraProperties() = when (System.getenv("ENV")) {
         "hmg", "prd" -> mapOf(
-                "DATABASE_URL" to System.getenv("DATABASE_URL"),
-                "DATABASE_DRIVER" to System.getenv("DATABASE_DRIVER"),
-                "DATABASE_USERNAME" to System.getenv("DATABASE_USERNAME"),
-                "DATABASE_PASSWORD" to System.getenv("DATABASE_PASSWORD"),
-                "APPLICATION_PORT" to System.getenv("APPLICATION_PORT")
+                "exposed.database.url" to System.getenv("EXPOSED_DATABASE_URL"),
+                "exposed.database.driver" to System.getenv("EXPOSED_DATABASE_DRIVER"),
+                "exposed.database.username" to System.getenv("EXPOSED_DATABASE_USERNAME"),
+                "exposed.database.password" to System.getenv("EXPOSED_DATABASE_PASSWORD"),
+                "javalin.application.port" to System.getenv("JAVALIN_APPLICATION_PORT")
         )
         else -> Properties().apply {
-            load(Application::class.java.getResource("/config/application.properties").openStream())
+            load(Application::class.java.getResource("application.conf").openStream())
         }.entries.associate {
             it.key.toString() to it.value.toString()
         }

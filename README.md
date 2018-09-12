@@ -2,6 +2,14 @@
 
 ## Prerequisitos
 
+- [Flyway](https://flywaydb.org/)
+
 ```bash
-ngrok
+gradle flywayMigrate -i
+```
+
+- [ngrok](https://ngrok.com/)
+
+```bash
+ngrok http 4567
 ```
