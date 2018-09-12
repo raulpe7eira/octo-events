@@ -8,7 +8,7 @@ import org.koin.standalone.getProperty
 import org.koin.standalone.inject
 import java.util.*
 
-class OctoEventsApplication : KoinComponent {
+class Application : KoinComponent {
 
     private val issueEventEndpoint by inject<IssueEventEndpoint>()
 
@@ -41,7 +41,7 @@ private fun getExtraProperties() = when (System.getenv("ENV")) {
             "APPLICATION_PORT" to System.getenv("APPLICATION_PORT")
     )
     else -> Properties().apply {
-        load(OctoEventsApplication::class.java.getResource("/config/application.properties").openStream())
+        load(Application::class.java.getResource("/config/application.properties").openStream())
     }.entries.associate {
         it.key.toString() to it.value.toString()
     }
@@ -52,5 +52,5 @@ fun main(args: Array<String>) {
             list = listOf(IssueEventModule),
             extraProperties = getExtraProperties()
     )
-    OctoEventsApplication().start()
+    Application().start()
 }
