@@ -1,4 +1,4 @@
-CREATE TABLE issues
+CREATE TABLE github.issues
 (
     id int NOT NULL PRIMARY KEY,
     created_at timestamp NOT NULL,

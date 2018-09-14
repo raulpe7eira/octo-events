@@ -44,15 +44,15 @@ class IssueEventRepositoryImpl : IssueEventRepository {
 
     override fun getStatistics() = transaction {
         val actions = exec("""
-            |SELECT ie.action
-            |FROM issues_event ie
-            |GROUP BY ie.action, ie.issue_id
-            |HAVING MAX(ie.created_at) = (
-            |    SELECT MAX(mxie.created_at)
-            |    FROM issues_event mxie
-            |    WHERE mxie.issue_id = ie.issue_id
-            |)
-        """.trimMargin().trim()) { resultSet ->
+            SELECT ie.action
+            FROM github.issues_event ie
+            GROUP BY ie.action, ie.issue_id
+            HAVING MAX(ie.created_at) = (
+                SELECT MAX(mxie.created_at)
+                FROM github.issues_event mxie
+                WHERE mxie.issue_id = ie.issue_id
+            )""".trimIndent()
+        ) { resultSet ->
             mutableListOf<String>().apply {
                 while (resultSet.next()) {
                     this += resultSet.getString("action")

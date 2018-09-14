@@ -24,6 +24,7 @@ class Application : KoinComponent {
                 password = getProperty("exposed.database.password")
         )
 
+        disableStartupBanner()
         error(404) { ctx -> ctx.json("not found") }
         event(JavalinEvent.SERVER_STOPPED) { stopKoin() }
         exception(Exception::class.java) { e, _ -> e.printStackTrace() }
@@ -45,7 +46,7 @@ class Application : KoinComponent {
                 "javalin.application.port" to System.getenv("JAVALIN_APPLICATION_PORT")
         )
         else -> Properties().apply {
-            load(Application::class.java.getResource("application.conf").openStream())
+            load(javaClass.getResourceAsStream("/application.conf"))
         }.entries.associate {
             it.key.toString() to it.value.toString()
         }

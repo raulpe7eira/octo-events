@@ -11,10 +11,14 @@ object IssueEventHandler : KoinComponent {
     private val issueEventService by inject<IssueEventService>()
 
     fun payload(ctx: Context) {
-        val issueEvent = ctx.bodyAsClass(IssueEvent::class.java)
-        when (issueEventService.save(issueEvent)) {
-            true -> ctx.json("payload loaded")
-            else -> ctx.json("payload not loaded")
+        try {
+            val issueEvent = ctx.bodyAsClass(IssueEvent::class.java)
+            when(issueEventService.save(issueEvent)) {
+                true -> ctx.status(201).json(mapOf("message" to "payload loaded"))
+                else -> throw RuntimeException()
+            }
+        } catch (e: Exception) {
+            ctx.status(406).json(mapOf("message" to "payload not loaded"))
         }
     }
 

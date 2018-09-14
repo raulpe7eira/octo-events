@@ -5,13 +5,13 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class IssueEvent(
-        @JsonProperty("action") val action: String,
-        @JsonProperty("issue") val issue: Issue
+        @JsonProperty("action", required = true) val action: String,
+        @JsonProperty("issue", required = true) val issue: Issue
 )
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class Issue(
-        @JsonProperty("id") val id: Int,
-        @JsonProperty("created_at") val createdAt: String,
-        @JsonProperty("updated_at") val updatedAt: String
+        @JsonProperty("id", required = true) val id: Int,
+        @JsonProperty("created_at", required = true) val createdAt: String,
+        @JsonProperty("updated_at", required = true) val updatedAt: String
 )

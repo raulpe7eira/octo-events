@@ -2,44 +2,95 @@ package integration
 
 import Application
 import io.javalin.Javalin
-import junit.framework.TestCase
-import org.junit.Test
+import org.flywaydb.core.Flyway
+import org.junit.FixMethodOrder
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.runners.MethodSorters
+import java.util.*
 
-class IntegrationTest : TestCase() {
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+class IntegrationTest {
 
     private lateinit var app: Javalin
+    private val baseUrl: String
 
-    private val url = "http://localhost:4567"
+    init {
+        Flyway().apply {
+            configure(Properties().apply {
+                load(javaClass.getResourceAsStream("/application.conf"))
+            })
+            migrate()
+        }
 
-    override fun setUp() {
+        baseUrl = "http://localhost:4567"
+    }
+
+    @BeforeEach
+    fun setUp() {
         app = Application().start()
     }
 
-    override fun tearDown() {
+    @AfterEach
+    fun tearDown() {
         app.stop()
     }
 
     @Test
     fun `assert endpoint not found`() {
-        val response = khttp.get(url = url + "/endpoint/not/found")
+        val response = khttp.get(
+                url = "$baseUrl/endpoint/not/found"
+        )
         assertEquals(404, response.statusCode)
     }
 
     @Test
-    fun `assert payload endpoint found`() {
-        val response = khttp.post(url = url + "/payload")
-        assertEquals(200, response.statusCode)
+    fun `assert payload endpoint found with success`() {
+        val payload = Application::class.java.getResourceAsStream("payloads/issues_events--valid.json")!!
+        val response = khttp.post(
+                url = "$baseUrl/payload",
+                data = payload
+        )
+        assertEquals(201, response.statusCode)
+        assertEquals("payload loaded", response.jsonObject["message"])
     }
 
     @Test
-    fun `assert issues_events endpoint found`() {
-        val response = khttp.get(url = url + "/issues/0/events")
+    fun `assert payload endpoint found with error`() {
+        val payload = Application::class.java.getResourceAsStream("payloads/issues_events--invalid.json")!!
+        val response = khttp.post(
+                url = "$baseUrl/payload",
+                data = payload
+        )
+        assertEquals(406, response.statusCode)
+        assertEquals("payload not loaded", response.jsonObject["message"])
+    }
+
+    @Test
+    fun `assert issues_id_events endpoint found with success`() {
+        val response = khttp.get(
+                url = "$baseUrl/issues/1234567890/events"
+        )
         assertEquals(200, response.statusCode)
+        assertEquals(1, response.jsonArray.length())
+    }
+
+    @Test
+    fun `assert issues_id_events endpoint found with error`() {
+        val response = khttp.get(
+                url = "$baseUrl/issues/0/events"
+        )
+        assertEquals(200, response.statusCode)
+        assertEquals(0, response.jsonArray.length())
     }
 
     @Test
     fun `assert issues_statistics endpoint found`() {
-        val response = khttp.get(url = url + "/issues/statistics")
+        val response = khttp.get(
+                url = "$baseUrl/issues/statistics"
+        )
         assertEquals(200, response.statusCode)
     }
 }
